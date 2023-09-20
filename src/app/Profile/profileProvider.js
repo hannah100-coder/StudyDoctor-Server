@@ -3,6 +3,7 @@ const { logger } = require("../../../config/winston");
 
 const profileDao = require("./profileDao");
 
+//**********의미적 validation은 나중에************
 
 
 //멘토 프로필 조회 API

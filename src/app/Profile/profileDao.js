@@ -1,10 +1,25 @@
 
 //멘토 프로필 입력 API
-/*async function inputMentorProfile(connection) {
-    const inputMentorProfileQuery = `
-    INSERT INTO Mentor
-    `
-}*/
+async function insertMentorProfile(connection, insertMentorParams) {
+    const insertMentorProfileQuery = `
+    INSERT INTO Mentor VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, null, null);
+    `;
+
+    const insertMentorProfileRow = await connection.query(insertMentorProfileQuery, insertMentorParams);
+    return insertMentorProfileRow
+}
+
+
+//멘티 프로필 입력 API
+async function insertMenteeProfile(connection, insertMenteeParams) {
+    const insertMenteeProfileQuery = `
+    INSERT INTO Mentor VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, null, null);
+    `;
+
+    const insertMenteeProfileRow = await connection.query(insertMenteeProfileQuery, insertMenteeParams);
+    return insertMenteeProfileRow
+}
+
 
 //멘토 프로필 조회 API
 async function selectMentorSelfProfile(connection, userIndex){
@@ -13,7 +28,7 @@ async function selectMentorSelfProfile(connection, userIndex){
     SELECT * FROM Mentor Where userIndex = ?;
     `;
 
-    const [mentorSelfProfileRow] = await connection.query(selectMentorSelfProfileQuery, userIndex);
+    const mentorSelfProfileRow = await connection.query(selectMentorSelfProfileQuery, userIndex);
     return mentorSelfProfileRow;
 }
 
@@ -25,11 +40,15 @@ async function selectMenteeSelfProfile(connection, userIndex){
     SELECT * FROM Mentee Where userIndex = ?;
     `;
 
-    const [menteeSelfProfileRow] = await connection.query(selectMenteeSelfProfileQuery, userIndex);
+    const menteeSelfProfileRow = await connection.query(selectMenteeSelfProfileQuery, userIndex);
     return menteeSelfProfileRow;
 }
 
 
 module.exports = {
+    insertMentorProfile,
+    insertMenteeProfile,
+    selectMentorSelfProfile,
+    selectMenteeSelfProfile
 
 };
