@@ -11,16 +11,25 @@ const regexEmail = require("regex-email");
 
 
 /*
- * API 멘토 자신의 프로필 조회
+ * API 멘토/맨티 자신의 프로필 조회
  * [GET] /app/user_profile
  */
 
-exports.getMentorSelfProfile = async function(req, res){
+exports.getSelfProfile = async function(req, res){
 
     const userIdx = req.verifiedToken.userIdx;
+    //Token에 Mentor_MenteeIdx 필요, mentor면 1 mentee면 0
+    const isMentorOrMentee = req.verifiedToken.Mentor_MenteeIdx;
 
-    const mentorSelfProfileResult = await profileProvider.retrieveMentorSelfProfile(userIdx);
+    if (isMentorOrMentee == 1){ //멘티인 경우
+        const mentorSelfProfileResult = await profileProvider.retrieveMentorSelfProfile(userIdx);
 
-    logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n``);
-    return res.send(response(baseResponse.SUCCESS, mentorSelfProfileResult));
+        logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n``);
+        return res.send(response(baseResponse.SUCCESS, mentorSelfProfileResult));
+    }else if{ //멘티인 경우
+        const menteeSelfProfileResult = await profileProvider.retrieveMenteeSelfProfile(userIdx);
+
+        logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n``);
+        return res.send(response(baseResponse.SUCCESS, menteeSelfProfileResult));
+    }
 }

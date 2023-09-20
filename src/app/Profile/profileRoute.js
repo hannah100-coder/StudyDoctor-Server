@@ -3,7 +3,7 @@ module.exports = function(app){
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 멘토 자신의 프로필 조회 API
-    app.get('/app/user_profile', profile.getMentorSelfProfile);
+    app.get('/app/user_profile', profile.getSelfProfile);
 
 
 };
