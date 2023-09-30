@@ -12,8 +12,28 @@ async function selectMentorAll(connection) {
     return mentorAllRows;
 }
 
+// 멘토 디테일 조회 API
+async function selectMentorDetail(connection, mentorIndex) {
+    const selectMentorDetailQuery = `
+        SELECT mentorIndex, mentorIntro, mentorSchedule, mentorTeaching, mentorCurriculum, mentorProfField
+        FROM Mentor
+        WHERE mentorIndex = ?;
+    `
+
+    const mentorDetailRow = await connection.query(selectMentorDetailQuery, mentorIndex);
+    return mentorDetailRow[0];
+}
+
+// 멘토 필터 조회 API
+async function selectMentorFilter(connection, mentorFilterParams) {
+    const selectMentorFilterQuery = `
+    SELECT 
+    `
+}
 
 
 module.exports = {
     selectMentorAll,
+    selectMentorDetail,
+    selectMentorFilter
 };

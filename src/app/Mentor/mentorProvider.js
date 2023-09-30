@@ -13,3 +13,29 @@ exports.retrieveMentorAll = async function() {
     connection.release();
     return mentorAllResult;
 }
+
+// 멘토 디테일 조회 API
+exports.retrieveMentorDetail = async function(mentorIndex) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    const mentorDetailResult = await mentorDao.selectMentorDetail(connection, mentorIndex);
+
+    connection.release();
+    return mentorDetailResult;
+}
+
+// 멘토 필터 조회 API
+exports.retrieveMentorFilter = async function(filterCategory, filterAge, filterGender) {
+    const connection = await pool.getConnection(async (conn) => conn);
+    // const mentorFilterResult = await mentorDao.selectMentorFilter(connection, [filterCategory, filterAge, filterGender])
+
+    // 카테고리 값에 따라 다른 다오 호출 -> 이게 나은 것 같음. 각 항목 별 다오 따로? ㅇㅇ. 디비 값이랑 비교하면 될듯.
+    //  mysql 조건문 활용 when then
+
+    //
+
+
+
+
+    connection.release();
+    return mentorFilterResult;
+}
