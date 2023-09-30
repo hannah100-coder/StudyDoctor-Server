@@ -7,7 +7,7 @@ const {logger} = require("../../../config/winston");
 const requestIp = require('request-ip');
 
 const regexEmail = require("regex-email");
-
+const userProvider = require("../../app/User/userProvider");
 
 
 /**
@@ -25,14 +25,25 @@ exports.getMentorAll = async function (req, res) {
 
 /**
  * API 멘토 디테일 조회
- * [GET] /app/mentor/:mentorIndex
- * Path Variable: mentorIndex
+ * [GET] /app/mentor/:userIndex
+ * Path Variable: userIndex
  */
 
 exports.getMentorDetail = async function(req, res) {
 
     const userIndex = req.params.userIndex;
+    let mentorIndex;
     // if(!userIndex)
+
+    const mentorOrMentee = await userProvider.retrieveMentorOrMentee(userIndex);
+
+    if(mentorOrMentee[0] == 0){
+        mentorIndex = mentorOrMentee[1];
+    } else {
+        // 에러
+    }
+
+    console.log('mentorIndex in mentorController: ', mentorIndex);
 
     const mentorEachResult = await mentorProvider.retrieveMentorDetail(mentorIndex);
 
