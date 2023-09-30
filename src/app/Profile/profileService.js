@@ -8,9 +8,6 @@ const baseResponse = require("../../../config/baseResponseStatus");
 const {response} = require("../../../config/response");
 const {errResponse} = require("../../../config/response");
 
-//**********의미적 validation은 나중에************
-
-
 
 /*
  * API 멘토/맨티 프로필 입력
@@ -39,7 +36,7 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
  * API 멘토/맨티 유저 테이블에 입력
  */
 
- exports.updateUserProfile = function(updateUserProfileParams) {
+ exports.updateUserProfile = async function(updateUserProfileParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const userProfileUpdateResult = await profileDao.updateUserProfile(connection, updateUserProfileParams);
 
@@ -48,25 +45,24 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
  }
 
 
+ /*
+  * API 멘토/맨티 프로필 수정
+  */
 
-/*
- * API 멘토/맨티 프로필 수정
- */
+ //멘토 프로필 수정 API
+ exports.updateMentorProfile = async function(updateMentorProfileParams) {
+     const connection = await pool.getConnection(async (conn) => conn);
+     const mentorUpdateResult = await profileDao.updateMentorProfile(connection, updateMentorProfileParams);
 
-//멘토 프로필 수정 API
-exports.updateMentorProfile = async function(updateMentorProfileParams) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const mentorUpdateResult = await profileDao.updateMentorProfile(connection, updateMentorProfileParams);
+     connection.release();
+     return mentorUpdateResult;
+ }
 
-    connection.release();
-    return mentorUpdateResult;
-}
+ //멘티 프로필 수정 API
+ exports.updateMenteeProfile = async function(fieldToUpdate, updateMenteeProfileParams) {
+     const connection = await pool.getConnection(async (conn) => conn);
+     const menteeUpdateResult = await profileDao.updateMenteeProfile(connection, fieldToUpdate, updateMenteeProfileParams);
 
-//멘티 프로필 수정 API
-exports.updateMenteeProfile = async function(updateMenteeProfileParams) {
-    const connection = await pool.getConnection(async (conn) => conn);
-    const menteeUpdateResult = await profileDao.updateMenteeProfile(connection, updateMenteeProfileParams);
-
-    connection.release();
-    return menteeUpdateResult;
-}
+     connection.release();
+     return menteeUpdateResult;
+ }

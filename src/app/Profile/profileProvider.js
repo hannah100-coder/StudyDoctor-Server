@@ -3,10 +3,6 @@ const { logger } = require("../../../config/winston");
 
 const profileDao = require("./profileDao");
 
-//**********의미적 validation은 나중에************
-
-
-
 /*
  * API 멘토/맨티 프로필 조회
  */
@@ -27,4 +23,17 @@ exports.retrieveMenteeProfile = async function(userIndex){
 
     connection.release();
     return menteeProfileResult;
+}
+
+
+/*
+ * userIdx로 멘토인지 멘티인지 가져오기
+ */
+
+exports.retrieveMentorOrMentee = async function(userIndex){
+    const connection = await pool.getConnection(async (conn) => conn);
+    const mentorOrMenteeResult = await profileDao.selectMentorOrMentee(connection, userIndex);
+
+    connection.release();
+    return mentorOrMenteeResult;
 }

@@ -1,4 +1,3 @@
-
 /*
  * API 멘토/맨티 프로필 입력
  */
@@ -6,7 +5,7 @@
 //멘토 프로필 입력 API
 async function insertMentorProfile(connection, insertMentorProfileParams) {
     const insertMentorProfileQuery = `
-    INSERT INTO Mentor VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, null, null);
+    INSERT INTO Mentor VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default);
     `;
 
     const insertMentorProfileRow = await connection.query(insertMentorProfileQuery, insertMentorProfileParams);
@@ -16,7 +15,7 @@ async function insertMentorProfile(connection, insertMentorProfileParams) {
 //멘티 프로필 입력 API
 async function insertMenteeProfile(connection, insertMenteeProfileParams) {
     const insertMenteeProfileQuery = `
-    INSERT INTO Mentor VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, null, null, null);
+    INSERT INTO Mentee VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default);
     `;
 
     const insertMenteeProfileRow = await connection.query(insertMenteeProfileQuery, insertMenteeProfileParams);
@@ -35,7 +34,7 @@ async function updateUserProfile(connection, updateUserProfileParams) {
     WHERE userIndex = ?;
     `;
 
-    const updateUserProfileRow = await connection.query(updateMentorProfileQuery, updateUserProfileParams);
+    const updateUserProfileRow = await connection.query(updateUserProfileQuery, updateUserProfileParams);
     return updateUserProfileRow;
 }
 
@@ -47,8 +46,7 @@ async function updateUserProfile(connection, updateUserProfileParams) {
 //멘토 프로필 조회 API
 async function selectMentorProfile(connection, userIndex){
     const selectMentorProfileQuery = `
-    //앞에 userIndex랑 뒤에 status, createdAt, updatedAt을 가져와도 되는지?, status가 active인 것만 가져와야하는지?
-    SELECT * FROM Mentor Where userIndex = ?;
+    SELECT * FROM Mentor Where userIndex = ?
     `;
 
     const mentorProfileRow = await connection.query(selectMentorProfileQuery, userIndex);
@@ -58,14 +56,26 @@ async function selectMentorProfile(connection, userIndex){
 //멘티 프로필 조회 API
 async function selectMenteeProfile(connection, userIndex){
     const selectMenteeProfileQuery = `
-    //앞에 userIndex랑 뒤에 status, createdAt, updatedAt을 가져와도 되는지?, status가 active인 것만 가져와야하는지?
-    SELECT * FROM Mentee Where userIndex = ?;
+    SELECT * FROM Mentee Where userIndex = ?
     `;
 
     const menteeProfileRow = await connection.query(selectMenteeProfileQuery, userIndex);
     return menteeProfileRow;
 }
 
+
+/*
+ * userIdx로 멘토인지 멘티인지 가져오기
+ */
+
+async function selectMentorOrMentee(connection, userIndex){
+    const selectMentorOrMenteeQuery = `
+    SELECT mentorOrMentee FROM User Where userIndex = ?
+    `;
+
+    const mentorOrMenteeResult = await connection.query(selectMentorOrMenteeQuery, userIndex);
+    return mentorOrMenteeResult[0][0].mentorOrMentee;
+}
 
 
 /*
@@ -76,8 +86,8 @@ async function selectMenteeProfile(connection, userIndex){
 async function updateMentorProfile(connection, updateMentorProfileParams){
     const updateMentorProfileQuery = `
     UPDATE Mentor
-    SET mentorNickname = ?, mentorGender = ?, mentorAge = ?, mentorField = ?, mentorProField = ?, mentorSchool = ?, mentorMajor = ?, mentorGraduate = ?, mentorIntro = ?, mentorSchedule = ?, mentorTeaching = ?, mentorCurriculum = ?, mentorImg = ?
-    WHERE mentorIndex = ?;
+    SET ?
+    WHERE userIndex = ?
     `;
 
     const updateMentorProfileRow = await connection.query(updateMentorProfileQuery, updateMentorProfileParams);
@@ -85,11 +95,11 @@ async function updateMentorProfile(connection, updateMentorProfileParams){
 }
 
 //멘티 프로필 수정 API
-async function updateMenteeProfile(connection, updateMenteeProfileParams){
+async function updateMenteeProfile(connection, fieldToUpdate, updateMenteeProfileParams){
     const updateMenteeProfileQuery = `
     UPDATE Mentee
-    SET menteeNickname = ?, menteeGender = ?, menteeAge = ?, menteeField = ?, menteeSchool = ?, menteeGraduate = ?, menteeSchedule = ?, menteeCost = ?, menteeWish = ?, menteePersonality = ?, menteeImg = ?
-    WHERE menteeIndex = ?;
+    SET  ${fieldToUpdate} = ?
+    WHERE userIndex = ?
     `;
 
     const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, updateMenteeProfileParams);
@@ -97,12 +107,13 @@ async function updateMenteeProfile(connection, updateMenteeProfileParams){
 }
 
 
-
 module.exports = {
     insertMentorProfile,
     insertMenteeProfile,
+    updateUserProfile,
     selectMentorProfile,
     selectMenteeProfile,
-    updateUserProfile
-
+    selectMentorOrMentee,
+    updateMentorProfile,
+    updateMenteeProfile
 };
