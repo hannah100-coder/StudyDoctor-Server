@@ -1,5 +1,119 @@
+/*
+ * API 멘토/맨티 프로필 입력
+ */
+
+//멘토 프로필 입력 API
+async function insertMentorProfile(connection, insertMentorProfileParams) {
+    const insertMentorProfileQuery = `
+    INSERT INTO Mentor VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default);
+    `;
+
+    const insertMentorProfileRow = await connection.query(insertMentorProfileQuery, insertMentorProfileParams);
+    return insertMentorProfileRow;
+}
+
+//멘티 프로필 입력 API
+async function insertMenteeProfile(connection, insertMenteeProfileParams) {
+    const insertMenteeProfileQuery = `
+    INSERT INTO Mentee VALUES (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default, default, default);
+    `;
+
+    const insertMenteeProfileRow = await connection.query(insertMenteeProfileQuery, insertMenteeProfileParams);
+    return insertMenteeProfileRow;
+}
+
+
+/*
+ * API 멘토/맨티 유저 테이블에 입력
+ */
+
+async function updateUserProfile(connection, updateUserProfileParams) {
+    const updateUserProfileQuery = `
+    UPDATE User
+    SET mentorOrMentee = ?
+    WHERE userIndex = ?;
+    `;
+
+    const updateUserProfileRow = await connection.query(updateUserProfileQuery, updateUserProfileParams);
+    return updateUserProfileRow;
+}
+
+
+/*
+ * API 멘토/맨티 프로필 조회
+ */
+
+//멘토 프로필 조회 API
+async function selectMentorProfile(connection, userIndex){
+    const selectMentorProfileQuery = `
+    SELECT * FROM Mentor Where userIndex = ?
+    `;
+
+    const mentorProfileRow = await connection.query(selectMentorProfileQuery, userIndex);
+    return mentorProfileRow;
+}
+
+//멘티 프로필 조회 API
+async function selectMenteeProfile(connection, userIndex){
+    const selectMenteeProfileQuery = `
+    SELECT * FROM Mentee Where userIndex = ?
+    `;
+
+    const menteeProfileRow = await connection.query(selectMenteeProfileQuery, userIndex);
+    return menteeProfileRow;
+}
+
+
+/*
+ * userIdx로 멘토인지 멘티인지 가져오기
+ */
+
+async function selectMentorOrMentee(connection, userIndex){
+    const selectMentorOrMenteeQuery = `
+    SELECT mentorOrMentee FROM User Where userIndex = ?
+    `;
+
+    const mentorOrMenteeResult = await connection.query(selectMentorOrMenteeQuery, userIndex);
+    return mentorOrMenteeResult[0][0].mentorOrMentee;
+}
+
+
+/*
+ * API 멘토/맨티 프로필 수정
+ */
+
+//멘토 프로필 수정 API
+async function updateMentorProfile(connection, updateMentorProfileParams){
+    const updateMentorProfileQuery = `
+    UPDATE Mentor
+    SET ?
+    WHERE userIndex = ?
+    `;
+
+    const updateMentorProfileRow = await connection.query(updateMentorProfileQuery, updateMentorProfileParams);
+    return updateMentorProfileRow;
+}
+
+//멘티 프로필 수정 API
+async function updateMenteeProfile(connection, fieldToUpdate, updateMenteeProfileParams){
+    const updateMenteeProfileQuery = `
+    UPDATE Mentee
+    SET  ${fieldToUpdate} = ?
+    WHERE userIndex = ?
+    `;
+
+    const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, updateMenteeProfileParams);
+    return updateMenteeProfileRow;
+}
 
 
 module.exports = {
-
+    insertMentorProfile,
+    insertMenteeProfile,
+    updateUserProfile,
+    selectMentorProfile,
+    selectMenteeProfile,
+    selectMentorOrMentee,
+    updateMentorProfile,
+    updateMenteeProfile
 };
