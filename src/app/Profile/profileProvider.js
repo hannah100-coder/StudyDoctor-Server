@@ -6,21 +6,25 @@ const profileDao = require("./profileDao");
 //**********의미적 validation은 나중에************
 
 
+
+/*
+ * API 멘토/맨티 프로필 조회
+ */
+
 //멘토 프로필 조회 API
-exports.retrieveMentorSelfProfile = async function(userIndex){
+exports.retrieveMentorProfile = async function(userIndex){
     const connection = await pool.getConnection(async (conn) => conn);
-    const mentorSelfProfileResult = await profileDao.selectMentorSelfProfile(connection, userIndex);
+    const mentorProfileResult = await profileDao.selectMentorProfile(connection, userIndex);
 
     connection.release();
-    return mentorSelfProfileResult;
+    return mentorProfileResult;
 }
 
-
 //멘티 프로필 조회 API
-exports.retrieveMenteeSelfProfile = async function(userIndex){
+exports.retrieveMenteeProfile = async function(userIndex){
     const connection = await pool.getConnection(async (conn) => conn);
-    const menteeSelfProfileResult = await profileDao.selectMenteeSelfProfile(connection, userIndex);
+    const menteeProfileResult = await profileDao.selectMenteeProfile(connection, userIndex);
 
     connection.release();
-    return menteeSelfProfileResult;
+    return menteeProfileResult;
 }
