@@ -43,8 +43,6 @@ exports.getMentorDetail = async function(req, res) {
         // 에러
     }
 
-    console.log('mentorIndex in mentorController: ', mentorIndex);
-
     const mentorEachResult = await mentorProvider.retrieveMentorDetail(mentorIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
@@ -75,11 +73,22 @@ exports.getMentorFilter = async function(req, res) {
 /**
  * API 멘토 닉네임 검색 조회
  * [GET] /app/mentor
- * Body:
+ * Query String으로 닉네임 검색
  */
 exports.getMentorByNickname = async function(req, res) {
     const nickname = req.query.nickname;    // Query String
 
+    if(!nickname){
+        // error
+    } else {
+        console.log('nickname in controller: ', nickname)
+        console.log('type of nickname: ', typeof nickname)
+
+        const mentorListByNickname = await mentorProvider.retrieveMentorListByNickname(nickname);
+
+        logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
+        return res.send(response(baseResponse.SUCCESS, mentorListByNickname));
+    }
 }
 
 

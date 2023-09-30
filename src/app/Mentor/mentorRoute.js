@@ -12,7 +12,7 @@ module.exports = function(app){
     // 멘토 필터링 조회 API
     app.get('/app/mentors/filter', mentor.getMentorFilter)
 
-    // 멘토 닉네임 검색 조회 API
+    // 멘토 닉네임 검색 조회 API - Query String
     app.get('/app/mentor', mentor.getMentorByNickname)
 };
 
