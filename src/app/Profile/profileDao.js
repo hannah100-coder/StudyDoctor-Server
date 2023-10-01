@@ -83,26 +83,26 @@ async function selectMentorOrMentee(connection, userIndex){
  */
 
 //멘토 프로필 수정 API
-async function updateMentorProfile(connection, updateMentorProfileParams){
+async function updateMentorProfile(connection, updateMentorProfileParams, userIndex){
     const updateMentorProfileQuery = `
     UPDATE Mentor
-    SET ?
+    SET ${updateMentorProfileParams.join(', ')}
     WHERE userIndex = ?
     `;
 
-    const updateMentorProfileRow = await connection.query(updateMentorProfileQuery, updateMentorProfileParams);
+    const updateMentorProfileRow = await connection.query(updateMentorProfileQuery, userIndex);
     return updateMentorProfileRow;
 }
 
 //멘티 프로필 수정 API
-async function updateMenteeProfile(connection, fieldToUpdate, updateMenteeProfileParams){
+async function updateMenteeProfile(connection, updateMenteeProfileParams, userIdx){
     const updateMenteeProfileQuery = `
     UPDATE Mentee
-    SET  ${fieldToUpdate} = ?
+    SET  ${updateMenteeProfileParams.join(', ')}
     WHERE userIndex = ?
     `;
 
-    const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, updateMenteeProfileParams);
+    const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, userIdx);
     return updateMenteeProfileRow;
 }
 

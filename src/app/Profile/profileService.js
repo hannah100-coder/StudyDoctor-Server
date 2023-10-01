@@ -50,18 +50,18 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
   */
 
  //멘토 프로필 수정 API
- exports.updateMentorProfile = async function(updateMentorProfileParams) {
+ exports.updateMentorProfile = async function(updateMentorProfileParams, userIdx) {
      const connection = await pool.getConnection(async (conn) => conn);
-     const mentorUpdateResult = await profileDao.updateMentorProfile(connection, updateMentorProfileParams);
+     const mentorUpdateResult = await profileDao.updateMentorProfile(connection, updateMentorProfileParams, userIdx);
 
      connection.release();
      return mentorUpdateResult;
  }
 
  //멘티 프로필 수정 API
- exports.updateMenteeProfile = async function(fieldToUpdate, updateMenteeProfileParams) {
+ exports.updateMenteeProfile = async function(updateMenteeProfileParams, userIdx) {
      const connection = await pool.getConnection(async (conn) => conn);
-     const menteeUpdateResult = await profileDao.updateMenteeProfile(connection, fieldToUpdate, updateMenteeProfileParams);
+     const menteeUpdateResult = await profileDao.updateMenteeProfile(connection, updateMenteeProfileParams, userIdx);
 
      connection.release();
      return menteeUpdateResult;
