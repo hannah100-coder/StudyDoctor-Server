@@ -8,6 +8,77 @@ const requestIp = require('request-ip');
 
 const regexEmail = require("regex-email");
 
-//provider로 요청자가 멘토인지, 멘토인지, 받는 사람이 멘토인지 멘티인지 체크(token으로 할 수 있는가?)
-//멘토->멘토, 멘티->멘티인 경우 확인해야 할까?
-//확인 후 MentorLike나 MenteeLike에 이미 있는지 확인
+/*
+ * API 멘토/맨티 Like 첫 입력
+ */
+//멘토 Like 멘티 첫 입력 API
+exports.postMentorLike = async function(req, res){
+    const insertMentorLikeParams = Object.values(req.body);
+    const mentorLikeResult = await likeService.insertMentorLike(insertMentorLikeParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+
+    return res.send(response(baseResponse.SUCCESS, mentorLikeResult));
+}
+
+//멘티 Like 멘토 첫 입력 API
+exports.postMenteeLike = async function(req, res){
+    const insertMenteeLikeParams = Object.values(req.body);
+    const menteeLikeResult = await likeService.insertMenteeLike(insertMenteeLikeParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+
+    return res.send(response(baseResponse.SUCCESS, menteeLikeResult));
+}
+
+
+/*
+ * API 멘토/맨티 Like 삭제
+ */
+//멘토 Unlike 멘토 입력 API
+exports.patchMentorUnlike = async function(req, res){
+    const updateMentorParams = Object.values(req.body);
+    console.log(updateMentorParams);
+
+    const mentorUnlikeResult = likeService.updateMentorUnlike(updateMentorParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+    return res.send(response(baseResponse.SUCCESS, mentorUnlikeResult));
+}
+
+//멘토 Unlike 멘티 입력 API
+exports.patchMenteeUnlike = async function(req, res){
+    const updateMenteeParams = Object.values(req.body);
+
+    const menteeUnlikeResult = likeService.updateMenteeUnlike(updateMenteeParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+    return res.send(response(baseResponse.SUCCESS, menteeUnlikeResult));
+
+}
+
+/*
+ * API 멘토/맨티 Like 입력
+ */
+//멘토 Like 멘티 입력 API
+exports.patchMentorLike = async function(req, res){
+    const updateMentorParams = Object.values(req.body);
+
+    const mentorLikeResult = likeService.updateMentorLike(updateMentorParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+    return res.send(response(baseResponse.SUCCESS, mentorLikeResult));
+
+}
+
+//멘티 Like 멘토 입력 API
+exports.patchMenteeLike = async function(req, res){
+    const updateMenteeParams = Object.values(req.body);
+
+    const menteeLikeResult = likeService.updateMenteeLike(updateMenteeParams);
+
+    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
+    return res.send(response(baseResponse.SUCCESS, menteeLikeResult));
+
+}
+

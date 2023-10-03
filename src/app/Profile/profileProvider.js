@@ -10,24 +10,24 @@ const profileDao = require("./profileDao");
 //멘토 프로필 조회 API
 exports.retrieveMentorProfile = async function(userIndex){
     const connection = await pool.getConnection(async (conn) => conn);
-    const mentorProfileResult = await profileDao.selectMentorProfile(connection, userIndex);
+    const selectMentorProfileResult = await profileDao.selectMentorProfile(connection, userIndex);
 
     connection.release();
-    return mentorProfileResult;
+    return selectMentorProfileResult;
 }
 
 //멘티 프로필 조회 API
 exports.retrieveMenteeProfile = async function(userIndex){
     const connection = await pool.getConnection(async (conn) => conn);
-    const menteeProfileResult = await profileDao.selectMenteeProfile(connection, userIndex);
+    const selectMenteeProfileResult = await profileDao.selectMenteeProfile(connection, userIndex);
 
     connection.release();
-    return menteeProfileResult;
+    return selectMenteeProfileResult;
 }
 
 
 /*
- * userIdx로 멘토인지 멘티인지 가져오기
+ * userIndex로 멘토인지 멘티인지 가져오기
  */
 
 exports.retrieveMentorOrMentee = async function(userIndex){

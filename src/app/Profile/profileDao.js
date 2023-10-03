@@ -49,8 +49,8 @@ async function selectMentorProfile(connection, userIndex){
     SELECT * FROM Mentor Where userIndex = ?
     `;
 
-    const mentorProfileRow = await connection.query(selectMentorProfileQuery, userIndex);
-    return mentorProfileRow;
+    const selectMentorProfileRow = await connection.query(selectMentorProfileQuery, userIndex);
+    return selectMentorProfileRow;
 }
 
 //멘티 프로필 조회 API
@@ -59,8 +59,8 @@ async function selectMenteeProfile(connection, userIndex){
     SELECT * FROM Mentee Where userIndex = ?
     `;
 
-    const menteeProfileRow = await connection.query(selectMenteeProfileQuery, userIndex);
-    return menteeProfileRow;
+    const selectMenteeProfileRow = await connection.query(selectMenteeProfileQuery, userIndex);
+    return selectMenteeProfileRow;
 }
 
 
@@ -73,8 +73,8 @@ async function selectMentorOrMentee(connection, userIndex){
     SELECT mentorOrMentee FROM User Where userIndex = ?
     `;
 
-    const mentorOrMenteeResult = await connection.query(selectMentorOrMenteeQuery, userIndex);
-    return mentorOrMenteeResult[0][0].mentorOrMentee;
+    const selectMentorOrMenteeResult = await connection.query(selectMentorOrMenteeQuery, userIndex);
+    return selectMentorOrMenteeResult[0][0].mentorOrMentee;
 }
 
 
@@ -95,14 +95,14 @@ async function updateMentorProfile(connection, updateMentorProfileParams, userIn
 }
 
 //멘티 프로필 수정 API
-async function updateMenteeProfile(connection, updateMenteeProfileParams, userIdx){
+async function updateMenteeProfile(connection, updateMenteeProfileParams, userIndex){
     const updateMenteeProfileQuery = `
     UPDATE Mentee
     SET  ${updateMenteeProfileParams.join(', ')}
     WHERE userIndex = ?
     `;
 
-    const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, userIdx);
+    const updateMenteeProfileRow = await connection.query(updateMenteeProfileQuery, userIndex);
     return updateMenteeProfileRow;
 }
 
