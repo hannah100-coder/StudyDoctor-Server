@@ -23,6 +23,7 @@ module.exports = function () {
     require('../src/app/Mentee/menteeRoute')(app);
     require('../src/app/Profile/profileRoute')(app);
     require('../src/app/Like/likeRoute')(app);
+    require('../src/app/Review/reviewRoute')(app);
 
 
     return app;
