@@ -81,8 +81,6 @@ exports.getMentorByNickname = async function(req, res) {
     if(!nickname){
         // error
     } else {
-        console.log('nickname in controller: ', nickname)
-        console.log('type of nickname: ', typeof nickname)
 
         const mentorListByNickname = await mentorProvider.retrieveMentorListByNickname(nickname);
 

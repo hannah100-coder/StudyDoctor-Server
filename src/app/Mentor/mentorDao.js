@@ -4,8 +4,8 @@ async function selectMentorAll(connection) {
     const selectMentorAllQuery = `
         SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
         FROM Mentor AS m
-                LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
-                LEFT JOIN Review As r ON m.mentorIndex = r.mentorIndex
+                 LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
+                 LEFT JOIN Review AS r ON c.menteeIndex = r.menteeIndex
         GROUP BY m.mentorIndex;
     `
     const [mentorAllRows] = await connection.query(selectMentorAllQuery);
@@ -39,8 +39,8 @@ async function selectMentorListByNickname(connection, nickname) {
         WHERE mentorNickname like concat('%', ?, '%');
     `
 
-    const [mentorListByNickname] = await connection.query(selectMentorListByNicknameQuery, nickname);
-    return mentorListByNickname;
+    const [mentorListByNicknameRows] = await connection.query(selectMentorListByNicknameQuery, nickname);
+    return mentorListByNicknameRows;
 }
 
 // 멘토 닉네임 검색 조회 API - mentorIndex로 해당 멘토 정보 조회
@@ -48,10 +48,13 @@ async function selectMentorByMentorIndex(connection, mentorIndex) {
     const selectMentorByMentorIndexQuery = `
         SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
         FROM Mentor AS m
-                LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
-                LEFT JOIN Review As r ON m.mentorIndex = r.mentorIndex
-        WHERE mentorIndex = ?;
+                 LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
+                 LEFT JOIN Review AS r ON c.menteeIndex = r.menteeIndex
+        WHERE m.mentorIndex = ?;
     `
+
+    const [mentorByMentorIndexRow] = await connection.query(selectMentorByMentorIndexQuery, mentorIndex);
+    return mentorByMentorIndexRow[0];
 }
 
 

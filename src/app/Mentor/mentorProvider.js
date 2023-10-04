@@ -45,17 +45,16 @@ exports.retrieveMentorFilter = async function(filterCategory, filterAge, filterG
 // 멘토 닉네임 검색 조회
 exports.retrieveMentorListByNickname = async function(nickname) {
     const connection = await pool.getConnection(async (conn) => conn);
-    const mentorListByNicknameResult = await mentorDao.selectMentorListByNickname(connection, nickname);
-    console.log(mentorListByNicknameResult)
+    const mentorIndexListsByNicknameResult = await mentorDao.selectMentorListByNickname(connection, nickname);
 
     let mentorLists = [];
-    for (let mentorList of mentorListByNicknameResult) {
+    for (let mentor of mentorIndexListsByNicknameResult) {
         //console.log(mentorList.mentorIndex)
-        const mentorResult = await mentorDao.selectMentorByMentorIndex(connection, mentorList.mentorIndex);
+        const mentorResult = await mentorDao.selectMentorByMentorIndex(connection, mentor.mentorIndex);
         mentorLists.push(mentorResult);
     }
 
     connection.release();
-    return mentorResult;
+    return mentorLists;
 
 }
