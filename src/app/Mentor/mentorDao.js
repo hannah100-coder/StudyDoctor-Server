@@ -12,8 +12,54 @@ async function selectMentorAll(connection) {
     return mentorAllRows;
 }
 
+// 멘토 디테일 조회 API
+async function selectMentorDetail(connection, mentorIndex) {
+    const selectMentorDetailQuery = `
+        SELECT mentorIndex, mentorIntro, mentorSchedule, mentorTeaching, mentorCurriculum, mentorProfField
+        FROM Mentor
+        WHERE mentorIndex = ?;
+    `
+
+    const mentorDetailRow = await connection.query(selectMentorDetailQuery, mentorIndex);
+    return mentorDetailRow[0];
+}
+
+// 멘토 필터 조회 API
+async function selectMentorFilter(connection, mentorFilterParams) {
+    const selectMentorFilterQuery = `
+        SELECT 
+    `
+}
+
+// 멘토 닉네임 검색 조회 API - nickname 가진 mentorIndex list 조회
+async function selectMentorListByNickname(connection, nickname) {
+    const selectMentorListByNicknameQuery = `
+        SELECT mentorIndex 
+        FROM Mentor 
+        WHERE mentorNickname like concat('%', ?, '%');
+    `
+
+    const [mentorListByNickname] = await connection.query(selectMentorListByNicknameQuery, nickname);
+    return mentorListByNickname;
+}
+
+// 멘토 닉네임 검색 조회 API - mentorIndex로 해당 멘토 정보 조회
+async function selectMentorByMentorIndex(connection, mentorIndex) {
+    const selectMentorByMentorIndexQuery = `
+        SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
+        FROM Mentor AS m
+                LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
+                LEFT JOIN Review As r ON m.mentorIndex = r.mentorIndex
+        WHERE mentorIndex = ?;
+    `
+}
+
 
 
 module.exports = {
     selectMentorAll,
+    selectMentorDetail,
+    selectMentorFilter,
+    selectMentorListByNickname,
+    selectMentorByMentorIndex,
 };
