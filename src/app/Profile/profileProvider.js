@@ -37,26 +37,3 @@ exports.retrieveMentorOrMentee = async function(userIndex){
     connection.release();
     return mentorOrMenteeResult;
 }
-
-
-/*
- * API 멘토/맨티 닉네임 조회
- */
-
-//멘토 닉네임 조회 API
-exports.retrieveMentorNickname = async function(mentorNickname){
-    const connection = await pool.getConnection(async (conn) => conn);
-    const selectMentorNicknameResult = await profileDao.selectMentorNickname(connection, mentorNickname);
-
-    connection.release();
-    return selectMentorNicknameResult;
-}
-
-//멘티 닉네임 조회 API
-exports.retrieveMenteeNickname = async function(menteeNickname){
-    const connection = await pool.getConnection(async (conn) => conn);
-    const selectMenteeNicknameResult = await profileDao.selectMenteeNickname(connection, menteeNickname);
-
-    connection.release();
-    return selectMenteeNicknameResult;
-}
