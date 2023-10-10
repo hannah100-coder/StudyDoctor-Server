@@ -16,4 +16,9 @@ module.exports = function(app){
     // user 프로필 편집 API
     app.patch('/app/mentor/profile/userIndex/:userIndex', profile.patchMentorProfile);
     app.patch('/app/mentee/profile/userIndex/:userIndex', profile.patchMenteeProfile);
+
+
+    //user 닉네임 조회 API
+    app.get('/app/mentor/profile/nickname', profile.getMentorNickname)
+    app.get('/app/mentee/profile/nickname', profile.getMenteeNickname)
 };
