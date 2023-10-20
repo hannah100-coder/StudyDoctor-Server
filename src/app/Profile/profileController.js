@@ -14,7 +14,7 @@ const regexEmail = require("regex-email");
  */
 
 exports.postMentorProfile = async function(req, res){
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
 
     const insertMentorProfileParams = Object.values(req.body);
     const updateUserProfileParams = [0, userIndex];
@@ -29,7 +29,7 @@ exports.postMentorProfile = async function(req, res){
 
 
 exports.postMenteeProfile = async function(req, res){
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
 
     const insertMenteeProfileParams = Object.values(req.body);
     const updateUserProfileParams = [1, userIndex];
@@ -49,8 +49,7 @@ exports.postMenteeProfile = async function(req, res){
 
 exports.getMentorProfile = async function(req, res){
 
-    //const userIndex = req.verifiedToken.userIndex;
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
     const mentorProfileResult = await profileProvider.retrieveMentorProfile(userIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
@@ -59,8 +58,7 @@ exports.getMentorProfile = async function(req, res){
 
 exports.getMenteeProfile = async function(req, res){
 
-    //const userIndex = req.verifiedToken.userIndex;
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
     const menteeProfileResult = await profileProvider.retrieveMenteeProfile(userIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
@@ -74,8 +72,7 @@ exports.getMenteeProfile = async function(req, res){
 
 exports.patchMentorProfile = async function(req, res){
 
-    //const userIndex = req.verifiedToken.userIndex;
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
 
     const bodyLength = Object.keys(req.body).length;
     const bodyKeys = Object.keys(req.body);
@@ -99,8 +96,7 @@ exports.patchMentorProfile = async function(req, res){
 
 exports.patchMenteeProfile = async function(req, res){
 
-    //const userIndex = req.verifiedToken.userIndex;
-    const userIndex = req.params.userIndex;
+    const userIndex = req.body.userIndex;
 
     const bodyLength = Object.keys(req.body).length;
     const bodyKeys = Object.keys(req.body);
