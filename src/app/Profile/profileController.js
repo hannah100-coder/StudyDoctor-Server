@@ -20,8 +20,8 @@ exports.postMentorProfile = async function(req, res){
     const updateUserProfileParams = [0, userIndex];
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
-    const mentorProfileResult = await profileService.insertMentorProfile(insertMentorProfileParams);
-    const mentorOrMenteeResult = await profileService.updateUserProfile(updateUserProfileParams);
+    const mentorProfileResult = await profileService.createMentorProfile(insertMentorProfileParams);
+    const mentorOrMenteeResult = await profileService.editUserProfile(updateUserProfileParams);
     const totalResult = [mentorProfileResult, mentorOrMenteeResult];
 
     return res.send(response(baseResponse.SUCCESS, totalResult));
@@ -35,8 +35,8 @@ exports.postMenteeProfile = async function(req, res){
     const updateUserProfileParams = [1, userIndex];
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
-    const menteeProfileResult = await profileService.insertMenteeProfile(insertMenteeProfileParams);
-    const mentorOrMenteeResult = await profileService.updateUserProfile(updateUserProfileParams);
+    const menteeProfileResult = await profileService.createMenteeProfile(insertMenteeProfileParams);
+    const mentorOrMenteeResult = await profileService.editUserProfile(updateUserProfileParams);
     const totalResult = [menteeProfileResult, mentorOrMenteeResult];
 
     return res.send(response(baseResponse.SUCCESS, totalResult));
@@ -91,7 +91,7 @@ exports.patchMentorProfile = async function(req, res){
         }
     }
 
-    const mentorProfileResult = await profileService.updateMentorProfile(updateMentorParams, userIndex);
+    const mentorProfileResult = await profileService.editMentorProfile(updateMentorParams, userIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, mentorProfileResult));
@@ -117,7 +117,7 @@ exports.patchMenteeProfile = async function(req, res){
     }
 
 
-    const menteeProfileResult = await profileService.updateMenteeProfile(updateMenteeParams, userIndex);
+    const menteeProfileResult = await profileService.editMenteeProfile(updateMenteeParams, userIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, menteeProfileResult));

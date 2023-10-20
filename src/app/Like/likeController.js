@@ -14,7 +14,7 @@ const regexEmail = require("regex-email");
 //멘토 Like 멘티 첫 입력 API
 exports.postMentorLike = async function(req, res){
     const insertMentorLikeParams = Object.values(req.body);
-    const mentorLikeResult = await likeService.insertMentorLike(insertMentorLikeParams);
+    const mentorLikeResult = await likeService.createMentorLike(insertMentorLikeParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
 
@@ -24,7 +24,7 @@ exports.postMentorLike = async function(req, res){
 //멘티 Like 멘토 첫 입력 API
 exports.postMenteeLike = async function(req, res){
     const insertMenteeLikeParams = Object.values(req.body);
-    const menteeLikeResult = await likeService.insertMenteeLike(insertMenteeLikeParams);
+    const menteeLikeResult = await likeService.createMenteeLike(insertMenteeLikeParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
 
@@ -40,7 +40,7 @@ exports.patchMentorUnlike = async function(req, res){
     const updateMentorParams = Object.values(req.body);
     console.log(updateMentorParams);
 
-    const mentorUnlikeResult = likeService.updateMentorUnlike(updateMentorParams);
+    const mentorUnlikeResult = likeService.editMentorUnlike(updateMentorParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, mentorUnlikeResult));
@@ -50,7 +50,7 @@ exports.patchMentorUnlike = async function(req, res){
 exports.patchMenteeUnlike = async function(req, res){
     const updateMenteeParams = Object.values(req.body);
 
-    const menteeUnlikeResult = likeService.updateMenteeUnlike(updateMenteeParams);
+    const menteeUnlikeResult = likeService.editMenteeUnlike(updateMenteeParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, menteeUnlikeResult));
@@ -64,7 +64,7 @@ exports.patchMenteeUnlike = async function(req, res){
 exports.patchMentorLike = async function(req, res){
     const updateMentorParams = Object.values(req.body);
 
-    const mentorLikeResult = likeService.updateMentorLike(updateMentorParams);
+    const mentorLikeResult = likeService.editMentorLike(updateMentorParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, mentorLikeResult));
@@ -75,7 +75,7 @@ exports.patchMentorLike = async function(req, res){
 exports.patchMenteeLike = async function(req, res){
     const updateMenteeParams = Object.values(req.body);
 
-    const menteeLikeResult = likeService.updateMenteeLike(updateMenteeParams);
+    const menteeLikeResult = likeService.editMenteeLike(updateMenteeParams);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, menteeLikeResult));

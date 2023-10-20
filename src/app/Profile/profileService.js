@@ -14,7 +14,7 @@ const {errResponse} = require("../../../config/response");
  */
 
 //멘토 프로필 입력 API
-exports.insertMentorProfile = async function(insertMentorProfileParams) {
+exports.createMentorProfile = async function(insertMentorProfileParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const insertMentorProfileResult = await profileDao.insertMentorProfile(connection, insertMentorProfileParams);
 
@@ -23,7 +23,7 @@ exports.insertMentorProfile = async function(insertMentorProfileParams) {
 }
 
 //멘티 프로필 입력 API
-exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
+exports.createMenteeProfile = async function(insertMenteeProfileParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const insertMenteeProfileResult = await profileDao.insertMenteeProfile(connection, insertMenteeProfileParams);
 
@@ -36,7 +36,7 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
  * API 멘토/맨티 유저 테이블에 입력
  */
 
- exports.updateUserProfile = async function(updateUserProfileParams) {
+ exports.editUserProfile = async function(updateUserProfileParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const updateUserProfileResult = await profileDao.updateUserProfile(connection, updateUserProfileParams);
 
@@ -50,7 +50,7 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
   */
 
  //멘토 프로필 수정 API
- exports.updateMentorProfile = async function(updateMentorProfileParams, userIndex) {
+ exports.editMentorProfile = async function(updateMentorProfileParams, userIndex) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMentorProfileResult = await profileDao.updateMentorProfile(connection, updateMentorProfileParams, userIndex);
 
@@ -59,7 +59,7 @@ exports.insertMenteeProfile = async function(insertMenteeProfileParams) {
  }
 
  //멘티 프로필 수정 API
- exports.updateMenteeProfile = async function(updateMenteeProfileParams, userIndex) {
+ exports.editMenteeProfile = async function(updateMenteeProfileParams, userIndex) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMenteeProfileResult = await profileDao.updateMenteeProfile(connection, updateMenteeProfileParams, userIndex);
 
