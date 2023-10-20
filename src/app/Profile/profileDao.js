@@ -119,6 +119,7 @@ async function selectMentorNickname(connection, mentorNickname){
 
     const selectMentorNicknameRow = await connection.query(selectMentorNicknameQuery, mentorNickname);
     return selectMentorNicknameRow;
+
 }
 
 //멘티 닉네임 조회 API
@@ -129,6 +130,7 @@ async function selectMenteeNickname(connection, menteeNickname){
 
     const selectMenteeNicknameRow = await connection.query(selectMenteeNicknameQuery, menteeNickname);
     return selectMenteeNicknameRow;
+
 }
 
 
