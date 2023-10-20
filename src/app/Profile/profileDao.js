@@ -107,6 +107,31 @@ async function updateMenteeProfile(connection, updateMenteeProfileParams, userIn
 }
 
 
+/*
+ * API 멘토/맨티 닉네임 조회
+ */
+
+//멘토 닉네임 조회 API
+async function selectMentorNickname(connection, mentorNickname){
+    const selectMentorNicknameQuery = `
+    SELECT * FROM Mentor Where mentorNickname = ?
+    `;
+
+    const selectMentorNicknameRow = await connection.query(selectMentorNicknameQuery, mentorNickname);
+    return selectMentorNicknameRow;
+}
+
+//멘티 닉네임 조회 API
+async function selectMenteeNickname(connection, menteeNickname){
+    const selectMenteeNicknameQuery = `
+    SELECT * FROM Mentee Where menteeNickname = ?
+    `;
+
+    const selectMenteeNicknameRow = await connection.query(selectMenteeNicknameQuery, menteeNickname);
+    return selectMenteeNicknameRow;
+}
+
+
 module.exports = {
     insertMentorProfile,
     insertMenteeProfile,
@@ -118,5 +143,4 @@ module.exports = {
     updateMenteeProfile,
     selectMentorNickname,
     selectMenteeNickname
-
 };
