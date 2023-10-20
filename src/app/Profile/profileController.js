@@ -118,26 +118,3 @@ exports.patchMenteeProfile = async function(req, res){
     logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
     return res.send(response(baseResponse.SUCCESS, menteeProfileResult));
 }
-
-
-/*
- * API 멘토/맨티 닉네임 조회
- */
-
-exports.getMentorNickname = async function(req, res){
-
-    const mentorNickname = req.body.mentorNickname;
-    const mentorNicknameResult = await profileProvider.retrieveMentorNickname(mentorNickname);
-
-    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
-    return res.send(response(baseResponse.SUCCESS, mentorNicknameResult));
-}
-
-exports.getMenteeNickname = async function(req, res){
-
-    const menteeNickname = req.body.menteeNickname;
-    const menteeNicknameResult = await profileProvider.retrieveMenteeNickname(menteeNickname);
-
-    logger.info(`App - client IP: ${requestIp.getClientIp(req)} \n`);
-    return res.send(response(baseResponse.SUCCESS, menteeNicknameResult));
-}
