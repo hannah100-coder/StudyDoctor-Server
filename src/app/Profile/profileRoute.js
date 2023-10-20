@@ -11,4 +11,14 @@ module.exports = function(app){
     // user 프로필 조회 API
     app.get('/app/mentor/profile', profile.getMentorProfile)
     app.get('/app/mentee/profile', profile.getMenteeProfile)
+
+
+    // user 프로필 편집 API
+    app.patch('/app/mentor/profile', profile.patchMentorProfile);
+    app.patch('/app/mentee/profile', profile.patchMenteeProfile);
+
+
+    //user 닉네임 조회 API
+    app.get('/app/mentor/profile/nickname', profile.getMentorNickname)
+    app.get('/app/mentee/profile/nickname', profile.getMenteeNickname)
 };
