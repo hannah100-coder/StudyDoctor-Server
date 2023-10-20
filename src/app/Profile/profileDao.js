@@ -115,5 +115,7 @@ module.exports = {
     selectMenteeProfile,
     selectMentorOrMentee,
     updateMentorProfile,
-    updateMenteeProfile
+    updateMenteeProfile,
+    selectMentorNickname,
+    selectMenteeNickname
 };

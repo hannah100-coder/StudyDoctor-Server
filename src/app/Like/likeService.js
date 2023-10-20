@@ -13,7 +13,7 @@ const {errResponse} = require("../../../config/response");
  */
 
 //멘토 Like 멘티 첫 입력 API
-exports.insertMentorLike = async function(insertMentorLikeParams) {
+exports.createMentorLike = async function(insertMentorLikeParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const insertMentorLikeResult = await likeDao.insertMentorLike(connection, insertMentorLikeParams);
 
@@ -22,7 +22,7 @@ exports.insertMentorLike = async function(insertMentorLikeParams) {
 }
 
 //멘티 Like 멘토 첫 입력 API
-exports.insertMenteeLike = async function(insertMenteeLikeParams) {
+exports.createMenteeLike = async function(insertMenteeLikeParams) {
     const connection = await pool.getConnection(async (conn) => conn);
     const insertMenteeLikeResult = await likeDao.insertMenteeLike(connection, insertMenteeLikeParams);
 
@@ -35,7 +35,7 @@ exports.insertMenteeLike = async function(insertMenteeLikeParams) {
  * API 멘토/맨티 Like 삭제
  */
 //멘토 Unlike 멘토 입력 API
-exports.updateMentorUnlike = async function(updateMentorUnlikeParams) {
+exports.editMentorUnlike = async function(updateMentorUnlikeParams) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMentorUnlikeResult = await likeDao.updateMentorUnlike(connection, updateMentorUnlikeParams);
 
@@ -44,7 +44,7 @@ exports.updateMentorUnlike = async function(updateMentorUnlikeParams) {
  }
 
 //멘티 Unlike 멘토 입력 API
-exports.updateMenteeUnlike = async function(updateMenteeUnlikeParams) {
+exports.editMenteeUnlike = async function(updateMenteeUnlikeParams) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMenteeUnlikeResult = await likeDao.updateMenteeUnlike(connection, updateMenteeUnlikeParams);
 
@@ -57,7 +57,7 @@ exports.updateMenteeUnlike = async function(updateMenteeUnlikeParams) {
  * API 멘토/맨티 Like 입력
  */
 //멘토 Like 멘티 입력 API
-exports.updateMentorLike = async function(updateMentorLikeParams) {
+exports.editMentorLike = async function(updateMentorLikeParams) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMentorLikeResult = await likeDao.updateMentorLike(connection, updateMentorLikeParams);
 
@@ -66,7 +66,7 @@ exports.updateMentorLike = async function(updateMentorLikeParams) {
  }
 
 //멘티 Like 멘티 입력 API
-exports.updateMenteeLike = async function(updateMenteeLikeParams) {
+exports.editMenteeLike = async function(updateMenteeLikeParams) {
      const connection = await pool.getConnection(async (conn) => conn);
      const updateMenteeLikeResult = await likeDao.updateMenteeLike(connection, updateMenteeLikeParams);
 
