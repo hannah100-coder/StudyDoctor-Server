@@ -36,4 +36,5 @@ exports.retrieveMentorOrMentee = async function(userIndex){
 
     connection.release();
     return mentorOrMenteeResult;
+
 }
