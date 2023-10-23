@@ -6,7 +6,7 @@ module.exports = function(app){
     app.get('/app/mentor/all', mentor.getMentorAll)
 
     // 멘토 상세 조회 API
-    app.get('/app/mentor/detail/:userIndex', mentor.getMentorDetail)
+    app.get('/app/mentor/detail/:mentorIndex', mentor.getMentorDetail)
 
     // 멘토 필터링 조회 API
     app.get('/app/mentor/filter', mentor.getMentorFilter)

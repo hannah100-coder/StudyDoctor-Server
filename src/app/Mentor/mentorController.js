@@ -25,23 +25,13 @@ exports.getMentorAll = async function (req, res) {
 
 /**
  * API 멘토 상세 조회
- * [GET] /app/mentor/:userIndex
- * Path Variable: userIndex
+ * [GET] /app/mentor/:mentorIndex
+ * Path Variable: mentorIndex
  */
 
 exports.getMentorDetail = async function(req, res) {
 
-    const userIndex = req.params.userIndex;
-    let mentorIndex;
-    // if(!userIndex)
-
-    const mentorOrMentee = await userProvider.retrieveMentorOrMentee(userIndex);
-
-    if(mentorOrMentee[0] == 0){
-        mentorIndex = mentorOrMentee[1];
-    } else {
-        // 에러
-    }
+    const mentorIndex = req.params.mentorIndex;
 
     const mentorEachResult = await mentorProvider.retrieveMentorDetail(mentorIndex);
 
