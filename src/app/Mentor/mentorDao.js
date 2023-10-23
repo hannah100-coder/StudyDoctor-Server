@@ -5,7 +5,7 @@ async function selectMentorAll(connection) {
         SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorSchool, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, round(AVG(r.stars), 2) AS starAvg
         FROM Mentor AS m
                  LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
-                 LEFT JOIN Review AS r ON c.menteeIndex = r.menteeIndex
+                 LEFT JOIN Review AS r ON m.mentorIndex = r.mentorIndex
         GROUP BY m.mentorIndex;
     `
     const [mentorAllRows] = await connection.query(selectMentorAllQuery);
