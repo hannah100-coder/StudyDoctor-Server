@@ -24,7 +24,7 @@ exports.getMentorAll = async function (req, res) {
 }
 
 /**
- * API 멘토 디테일 조회
+ * API 멘토 상세 조회
  * [GET] /app/mentor/:userIndex
  * Path Variable: userIndex
  */

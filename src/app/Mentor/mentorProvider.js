@@ -14,7 +14,7 @@ exports.retrieveMentorAll = async function() {
     return mentorAllResult;
 }
 
-// 멘토 디테일 조회 API
+// 멘토 상세 조회 API
 exports.retrieveMentorDetail = async function(mentorIndex) {
     const connection = await pool.getConnection(async (conn) => conn);
     const mentorDetailResult = await mentorDao.selectMentorDetail(connection, mentorIndex);

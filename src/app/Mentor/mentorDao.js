@@ -2,7 +2,7 @@
 // 모든 멘토 조회 API
 async function selectMentorAll(connection) {
     const selectMentorAllQuery = `
-        SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
+        SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorSchool, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
         FROM Mentor AS m
                  LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
                  LEFT JOIN Review AS r ON c.menteeIndex = r.menteeIndex
@@ -12,7 +12,7 @@ async function selectMentorAll(connection) {
     return mentorAllRows;
 }
 
-// 멘토 디테일 조회 API
+// 멘토 상세 조회 API
 async function selectMentorDetail(connection, mentorIndex) {
     const selectMentorDetailQuery = `
         SELECT mentorIndex, mentorIntro, mentorSchedule, mentorTeaching, mentorCurriculum, mentorProfField
