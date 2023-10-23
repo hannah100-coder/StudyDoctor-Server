@@ -46,7 +46,7 @@ async function selectMentorListByNickname(connection, nickname) {
 // 멘토 닉네임 검색 조회 API - mentorIndex로 해당 멘토 정보 조회
 async function selectMentorByMentorIndex(connection, mentorIndex) {
     const selectMentorByMentorIndexQuery = `
-        SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, AVG(r.stars) AS starAvg
+        SELECT m.mentorIndex, m.mentorNickname, m.mentorGender, m.mentorAge, m.mentorField, m.mentorSchool, m.mentorImg, COUNT(c.menteeIndex) AS menteeCnt, round(AVG(r.stars), 2) AS starAvg
         FROM Mentor AS m
                  LEFT JOIN Matching AS c ON m.mentorIndex = c.mentorIndex
                  LEFT JOIN Review AS r ON c.menteeIndex = r.menteeIndex
