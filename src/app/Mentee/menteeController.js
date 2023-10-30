@@ -18,7 +18,9 @@ const userProvider = require("../User/userProvider");
 
 exports.getMenteeAll = async function (req, res) {
 
-    const menteeAllResult = await menteeProvider.retrieveMenteeAll();
+    const mentorIndex = req.body.mentorIndex;
+
+    const menteeAllResult = await menteeProvider.retrieveMenteeAll(mentorIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
     return res.send(response(baseResponse.SUCCESS, menteeAllResult));

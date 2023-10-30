@@ -1,4 +1,4 @@
-// 모든 멘토 조회 API
+// 모든 멘티 조회 API
 async function selectMenteeAll(connection) {
     const selectMenteeAllQuery = `
         SELECT menteeIndex, menteeNickname, menteeGender, menteeAge, menteeField, menteeImg, menteeSchool
@@ -6,6 +6,18 @@ async function selectMenteeAll(connection) {
     `
     const [menteeAllRows] = await connection.query(selectMenteeAllQuery);
     return menteeAllRows;
+}
+
+// 모든 멘티 조회 API - 좋아요 눌린 멘티 리스트 조회
+async function selectMenteeIsLiked(connection, mentorIndex) {
+    const selectMenteeIsLikedQuery = `
+        SELECT menteeIndex
+        FROM MentorLike
+        WHERE mentorIndex = ? AND isLike = 1;
+    `
+    const menteeIsLikedRow = await connection.query(selectMenteeIsLikedQuery, mentorIndex);
+    const menteeIsLikedIndexList = menteeIsLikedRow[0].map(row => row.menteeIndex);
+    return menteeIsLikedIndexList;
 }
 
 // 멘티 상세 조회 API
@@ -46,6 +58,7 @@ async function selectMenteeByMenteeIndex(connection, menteeIndex) {
 
 module.exports = {
     selectMenteeAll,
+    selectMenteeIsLiked,
     selectMenteeDetail,
     selectMenteeListByNickname,
     selectMenteeByMenteeIndex,

@@ -2,13 +2,23 @@ const { pool } = require("../../../config/database");
 const { logger } = require("../../../config/winston");
 
 const menteeDao = require("./menteeDao");
-const mentorDao = require("../Mentor/mentorDao");
 
 
 // 모든 멘티 조회 API
-exports.retrieveMenteeAll = async function() {
+exports.retrieveMenteeAll = async function(mentorIndex) {
     const connection = await pool.getConnection(async (conn) => conn);
     const menteeAllResult = await menteeDao.selectMenteeAll(connection);
+    const menteeIsLikedResult = await menteeDao.selectMenteeIsLiked(connection, mentorIndex);
+    // mentorIndex 만 리턴해줌.
+
+    for(let menteeObject of menteeAllResult) {
+        if(menteeIsLikedResult.includes(menteeObject.menteeIndex)) {
+            menteeObject.isLiked = 1;
+        }else {
+            menteeObject.isLiked = 0;
+        }
+    }
+
 
     connection.release();
     return menteeAllResult;
