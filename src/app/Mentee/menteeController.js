@@ -70,13 +70,14 @@ exports.getMenteeFilter = async function(req, res) {
  * Query String으로 닉네임 검색
  */
 exports.getMenteeByNickname = async function(req, res) {
-    const nickname = req.query.nickname;    // Query String
+    const mentorIndex = req.body.mentorIndex;
+    const nickname = req.body.nickname;
 
     if(!nickname){
         // error
     } else {
 
-        const menteeListByNickname = await menteeProvider.retrieveMenteeListByNickname(nickname);
+        const menteeListByNickname = await menteeProvider.retrieveMenteeListByNickname(mentorIndex, nickname);
 
         logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
         return res.send(response(baseResponse.SUCCESS, menteeListByNickname));

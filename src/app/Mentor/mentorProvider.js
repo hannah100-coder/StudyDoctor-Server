@@ -57,17 +57,17 @@ exports.retrieveMentorListByNickname = async function(menteeIndex, nickname) {
     const connection = await pool.getConnection(async (conn) => conn);
     const mentorIndexListsByNicknameResult = await mentorDao.selectMentorListByNickname(connection, nickname);
 
-    let mentorLists = [];
+    let mentorList = [];
     for (let mentor of mentorIndexListsByNicknameResult) {
         //console.log(mentorList.mentorIndex)
         const mentorResult = await mentorDao.selectMentorByMentorIndex(connection, mentor.mentorIndex);
-        mentorLists.push(mentorResult);
+        mentorList.push(mentorResult);
     }
 
     const mentorIsLikedResult = await mentorDao.selectMentorIsLiked(connection, menteeIndex);
     // mentorIndex 만 리턴해줌.
 
-    for(let mentorObject of mentorLists) {
+    for(let mentorObject of mentorList) {
         if(mentorIsLikedResult.includes(mentorObject.mentorIndex)) {
             mentorObject.isLiked = 1;
         }else {
@@ -77,6 +77,6 @@ exports.retrieveMentorListByNickname = async function(menteeIndex, nickname) {
 
 
     connection.release();
-    return mentorLists;
+    return mentorList;
 
 }

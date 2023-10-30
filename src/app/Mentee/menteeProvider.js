@@ -2,6 +2,7 @@ const { pool } = require("../../../config/database");
 const { logger } = require("../../../config/winston");
 
 const menteeDao = require("./menteeDao");
+const mentorDao = require("../Mentor/mentorDao");
 
 
 // 모든 멘티 조회 API
@@ -18,7 +19,6 @@ exports.retrieveMenteeAll = async function(mentorIndex) {
             menteeObject.isLiked = 0;
         }
     }
-
 
     connection.release();
     return menteeAllResult;
@@ -47,7 +47,7 @@ exports.retrieveMenteeFilter = async function(category, gender) {
 }
 
 // 멘티 닉네임 검색 조회
-exports.retrieveMenteeListByNickname = async function(nickname) {
+exports.retrieveMenteeListByNickname = async function(mentorIndex, nickname) {
     const connection = await pool.getConnection(async (conn) => conn);
     const menteeIndexListByNicknameResult = await menteeDao.selectMenteeListByNickname(connection, nickname);
 
@@ -56,6 +56,16 @@ exports.retrieveMenteeListByNickname = async function(nickname) {
         //console.log(mentorList.mentorIndex)
         const menteeResult = await menteeDao.selectMenteeByMenteeIndex(connection, mentee.menteeIndex);
         menteeList.push(menteeResult);
+    }
+
+    const menteeIsLikedResult = await menteeDao.selectMenteeIsLiked(connection, mentorIndex);
+
+    for(let menteeObject of menteeList) {
+        if(menteeIsLikedResult.includes(menteeObject.menteeIndex)) {
+            menteeObject.isLiked = 1;
+        }else {
+            menteeObject.isLiked = 0;
+        }
     }
 
     connection.release();
