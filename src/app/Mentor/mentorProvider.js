@@ -6,9 +6,19 @@ const mentorDao = require("./mentorDao");
 
 
 // 모든 멘토 조회 API
-exports.retrieveMentorAll = async function() {
+exports.retrieveMentorAll = async function(menteeIndex) {
     const connection = await pool.getConnection(async (conn) => conn);
     const mentorAllResult = await mentorDao.selectMentorAll(connection);
+    const mentorIsLikedResult = await mentorDao.selectMentorIsLiked(connection, menteeIndex);
+    // mentorIndex 만 리턴해줌.
+
+    for(let mentorObject of mentorAllResult) {
+        if(mentorIsLikedResult.includes(mentorObject.mentorIndex)) {
+            mentorObject.isLiked = 1;
+        }else {
+            mentorObject.isLiked = 0;
+        }
+    }
 
     connection.release();
     return mentorAllResult;

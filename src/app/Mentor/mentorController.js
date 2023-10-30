@@ -17,7 +17,9 @@ const userProvider = require("../../app/User/userProvider");
 
 exports.getMentorAll = async function (req, res) {
 
-    const mentorAllResult = await mentorProvider.retrieveMentorAll();
+    const menteeIndex = req.body.menteeIndex;
+
+    const mentorAllResult = await mentorProvider.retrieveMentorAll(menteeIndex);
 
     logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
     return res.send(response(baseResponse.SUCCESS, mentorAllResult));
@@ -46,11 +48,18 @@ exports.getMentorDetail = async function(req, res) {
  */
 exports.getMentorFilter = async function(req, res) {
 
-    const filterCategory = req.body.category;   // 0수능, 1편입, 2공무원, 3어학, 4유학, 5자격증, 6대학전공, 7기타
-    const filterAge = req.body.age;         // 2모두, 0만 24세 미만, 1만 24세 이상
-    const filterGender = req.body.gender;   // 2모두, 남성 0, 여성 1
+    let filterCategory = req.body.category;   // 0선택x, 1수능, 2편입, 3공무원, 4어학, 5유학, 6자격증, 7대학전공, 8기타 ( 복수선택?)
+    let filterAge = req.body.age;         // 2모두, 0만24세 미만, 1만24세 이상
+    let filterGender = req.body.gender;   // 2모두, 남성 0, 여성 1
 
-    // const {randomResultContent, randomResultType} = req.body; <- 이렇게 쓰는 게 더 나을듯.
+    // 값을 선택하지 않았을 경우, 디폴트값: 모두
+    if(!filterCategory)
+        filterCategory = 0
+    if(!filterAge)
+        filterAge = 0
+    if(!filterGender)
+        filterGender = 0
+
 
     const mentorFilterResult = await mentorProvider.retrieveMentorFilter(filterCategory, filterAge, filterGender);
 
