@@ -53,7 +53,7 @@ exports.retrieveMentorFilter = async function(filterCategory, filterAge, filterG
 
 
 // 멘토 닉네임 검색 조회
-exports.retrieveMentorListByNickname = async function(nickname) {
+exports.retrieveMentorListByNickname = async function(menteeIndex, nickname) {
     const connection = await pool.getConnection(async (conn) => conn);
     const mentorIndexListsByNicknameResult = await mentorDao.selectMentorListByNickname(connection, nickname);
 
@@ -63,6 +63,18 @@ exports.retrieveMentorListByNickname = async function(nickname) {
         const mentorResult = await mentorDao.selectMentorByMentorIndex(connection, mentor.mentorIndex);
         mentorLists.push(mentorResult);
     }
+
+    const mentorIsLikedResult = await mentorDao.selectMentorIsLiked(connection, menteeIndex);
+    // mentorIndex 만 리턴해줌.
+
+    for(let mentorObject of mentorLists) {
+        if(mentorIsLikedResult.includes(mentorObject.mentorIndex)) {
+            mentorObject.isLiked = 1;
+        }else {
+            mentorObject.isLiked = 0;
+        }
+    }
+
 
     connection.release();
     return mentorLists;

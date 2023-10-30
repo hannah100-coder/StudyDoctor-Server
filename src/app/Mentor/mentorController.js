@@ -72,16 +72,16 @@ exports.getMentorFilter = async function(req, res) {
 /**
  * API 멘토 닉네임 검색 조회
  * [GET] /app/mentor
- * Query String으로 닉네임 검색
  */
 exports.getMentorByNickname = async function(req, res) {
-    const nickname = req.query.nickname;    // Query String
+    const menteeIndex = req.body.menteeIndex;
+    const nickname = req.body.nickname;
 
     if(!nickname){
         // error
     } else {
 
-        const mentorListByNickname = await mentorProvider.retrieveMentorListByNickname(nickname);
+        const mentorListByNickname = await mentorProvider.retrieveMentorListByNickname(menteeIndex, nickname);
 
         logger.info(`App - client IP: ${requestIp.getClientIp(req)}} \n`);
         return res.send(response(baseResponse.SUCCESS, mentorListByNickname));
