@@ -14,7 +14,7 @@ async function selectMentorReviewUpper(connection, mentorIndex) {
 // 멘토 리뷰 조회 API - 리뷰 리스트
 async function selectMentorReviewList(connection, mentorIndex) {
     const selectMentorReviewListQuery = `
-        SELECT r.reviewIndex, m.menteeNickname, r.category, r.stars, r.reviewText
+        SELECT r.reviewIndex, m.menteeNickname, r.category, r.stars, r.reviewText, r.createdAt
         FROM Review AS r
                  LEFT JOIN Mentee AS m ON r.menteeIndex = m.menteeIndex
         WHERE mentorIndex = ?;
