@@ -44,6 +44,11 @@ exports.retrieveMentorFilter = async function(filterCategory, filterAge, filterG
     //
 
 
+    //대용님 다오문 참고 - 이런식으로 다오에서도 값 수정 가능 -> 부등호랑 이런거 이렇게 concat해서 해도 되지않을까?
+    // UPDATE Mentee
+    // SET ${updateMenteeProfileParams.join(', ')}
+    // WHERE userINdex = ?
+
 
 
     connection.release();
