@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "NODE_ENV=development node index.js",
+    "dev": "nodemon",
     "prod": "NODE_ENV=production node index.js"
   },
   "author": "",
@@ -17,12 +17,21 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
+    "moment": "^2.29.4",
     "mysql2": "^2.0.0",
-    "nodemon": "^2.0.7",
+    "path": "^0.12.7",
     "regex-email": "^1.0.2",
     "request-ip": "^3.3.0",
     "save": "^2.9.0",
+    "socket.io": "^4.7.2",
     "winston": "^3.2.1",
     "winston-daily-rotate-file": "^4.2.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.3",
+    "@babel/node": "^7.22.19",
+    "@babel/preset-env": "^7.23.3",
+    "nodemon": "^3.0.1"
   }
 }

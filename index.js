@@ -1,6 +1,33 @@
 const express = require('./config/express');
 const {logger} = require('./config/winston');
+const http = require("http");
+const app = express();
+const path = require('path');
+const server = http.createServer(app);
+const socketIO = require("socket.io");
+const io = socketIO(server)
+const moment = require("moment")
+
 
 const port = 3000;
-express().listen(port);
+
+io.on("connect", (socket) => {
+    socket.on("chatting", (data)=>{
+        const { name, msg, rec } = data;
+        console.log(name);
+        console.log(rec);
+        io.emit(name, {
+            name,
+            msg,
+            time: moment(new Date()).format("h:mm A")
+        })
+        io.emit(rec, {
+                    name,
+                    msg,
+                    time: moment(new Date()).format("h:mm A")
+        })
+    })
+})
+
+server.listen(port);
 logger.info(`${process.env.NODE_ENV} - API Server Start At Port ${port}`);
