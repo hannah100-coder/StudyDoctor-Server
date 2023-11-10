@@ -5,8 +5,12 @@ const app = express();
 const path = require('path');
 const server = http.createServer(app);
 const socketIO = require("socket.io");
-const io = socketIO(server)
-const moment = require("moment")
+const moment = require("moment");
+const io = socketIO(server, {
+    cors: {
+      origin: "*",
+    },
+  });
 
 
 const port = 3000;
