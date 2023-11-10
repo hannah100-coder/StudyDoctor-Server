@@ -4,6 +4,7 @@ const http = require("http");
 const app = express();
 const path = require('path');
 const server = http.createServer(app);
+const cors = require("cors");
 const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
