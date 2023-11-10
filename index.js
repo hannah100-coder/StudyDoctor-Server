@@ -9,7 +9,7 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-        origin: "https://studydoctor.shop"
+        origin: "file:///C:/DYStudy/%EC%A2%85%ED%95%A9%EC%84%A4%EA%B3%842/StudyDoctor-Server%20-%20%EB%B3%B5%EC%82%AC%EB%B3%B8/src/index.html"
     }
 });
 const port = 3000;
