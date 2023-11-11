@@ -8,7 +8,8 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin: "*"
+      origin: "*",
+      Credential: true
     }
   });
 const port = 3000;
