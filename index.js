@@ -8,11 +8,7 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin: [
-        "http://localhost:3000",
-        "https://ojs201.github.io",
-        "http://localhost",
-      ],
+      origin: "https://ojs201.github.io",
       credentials: true,
       allowedHeaders: "https://ojs201.github.io",
       optionsSuccessStatus: 200,
