@@ -1,13 +1,11 @@
 const express = require('./config/express');
 const {logger} = require('./config/winston');
 const http = require("http");
-const WebSocket = require("ws");
 const app = express();
 const server = http.createServer(app);
 const {Server} = require("socket.io");
 const {instrument} = require("@socket.io/admin-ui")
 const moment = require("moment");
-const wss = new WebSocket.Server({ server });
 const io = new Server(server, {
     cors: {
         origin: ["https://admin.socket.io"],
