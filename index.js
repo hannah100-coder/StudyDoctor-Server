@@ -4,12 +4,11 @@ const http = require("http");
 const app = express();
 const path = require('path');
 const server = http.createServer(app);
-const cors = require("cors");
 const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin: "*",
+      origin: ["https://ojs201.github.io/", "http://localhost:3000"],
       methods: ["GET", "POST"]
     }
   });
