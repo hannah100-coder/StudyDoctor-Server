@@ -9,7 +9,7 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin: "https://ojs201.github.io",
+      origin: "*",
       methods: ["GET", "POST"]
     }
   });
