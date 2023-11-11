@@ -13,10 +13,10 @@ const io = new Server(server, {
       }
   });
 
-instrument(io, {
-    auth: false,
-    mode: "development",
-});
+// instrument(io, {
+//     auth: false,
+//     mode: "development",
+// });
 
 const port = 3000;
 
