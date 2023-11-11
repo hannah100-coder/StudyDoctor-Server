@@ -14,7 +14,7 @@ const io = socketIO(server, {
         "http://localhost",
       ],
       credentials: true,
-      allowedHeaders: "*",
+      allowedHeaders: "https://ojs201.github.io",
       optionsSuccessStatus: 200,
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
     }
