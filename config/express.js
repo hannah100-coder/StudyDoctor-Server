@@ -14,7 +14,11 @@ module.exports = function () {
 
     app.use(methodOverride());
 
-    app.use(cors());
+    app.use(cors({
+        origin: "https://ojs201.github.io",
+        credentials: true,
+        optionsSuccessStatus: 200,
+    }));
 
     app.use(express.static(path.join(process.cwd(), "src")));
 
@@ -25,6 +29,7 @@ module.exports = function () {
     require('../src/app/Mentee/menteeRoute')(app);
     require('../src/app/Profile/profileRoute')(app);
     require('../src/app/Like/likeRoute')(app);
+    require('../src/app/Review/reviewRoute')(app);
 
 
     return app;
