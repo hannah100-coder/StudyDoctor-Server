@@ -7,7 +7,12 @@ const server = http.createServer(app);
 const cors = require("cors");
 const socketIO = require("socket.io");
 const moment = require("moment");
-const io = socketIO(server);
+const io = socketIO(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"]
+    }
+  });
 const port = 3000;
 
 io.on("connect", (socket) => {
