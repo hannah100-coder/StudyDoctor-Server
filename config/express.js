@@ -15,9 +15,9 @@ module.exports = function () {
     app.use(methodOverride());
 
     app.use(cors({
-        origin: "https://naver.com", // 접근 권한을 부여하는 도메인
-        credentials: true, // 응답 헤더에 Access-Control-Allow-Credentials 추가
-        optionsSuccessStatus: 200, // 응답 상태 200으로 설정
+        origin: "https://ojs201.github.io",
+        credentials: true,
+        optionsSuccessStatus: 200,
     }));
 
     app.use(express.static(path.join(process.cwd(), "src")));
