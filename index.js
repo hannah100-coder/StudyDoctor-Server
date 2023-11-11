@@ -8,8 +8,7 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin: ["https://ojs201.github.io/", "http://localhost:3000"],
-      methods: ["GET", "POST"]
+      origin: "*"
     }
   });
 const port = 3000;
