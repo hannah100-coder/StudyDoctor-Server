@@ -15,9 +15,7 @@ module.exports = function () {
     app.use(methodOverride());
 
     app.use(cors({
-        origin: "https://ojs201.github.io",
-        credentials: true,
-        optionsSuccessStatus: 200,
+        origin: "https://ojs201.github.io"
     }));
 
     app.use(express.static(path.join(process.cwd(), "src")));
