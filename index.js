@@ -8,10 +8,15 @@ const socketIO = require("socket.io");
 const moment = require("moment");
 const io = socketIO(server, {
     cors: {
-      origin:"https://ojs201.github.io",
-      methods:["GET","POST"],
-      credentials:true,
-      allowedHeaders:["Access-Control-Allow-Origin:ojs201.github.io"]
+      origin: [
+        "http://localhost:3000",
+        "https://ojs201.github.io",
+        "http://localhost",
+      ],
+      credentials: true,
+      allowedHeaders: "*",
+      optionsSuccessStatus: 200,
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
     }
   });
 const port = 3000;
