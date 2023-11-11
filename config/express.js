@@ -14,12 +14,9 @@ module.exports = function () {
 
     app.use(methodOverride());
 
-    app.use((req, res, next) => {
-        res.header('Access-Control-Allow-Origin', 'https://ojs201.github.io');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-        next();
-    });
+    app.use(cors({
+        origin: "https://ojs201.github.io"
+    }));
 
     app.use(express.static(path.join(process.cwd(), "src")));
 
