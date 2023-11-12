@@ -18,7 +18,8 @@ const userProvider = require("../User/userProvider");
 
 exports.getMenteeAll = async function (req, res) {
 
-    const mentorIndex = req.body.mentorIndex;
+    //const mentorIndex = req.body.mentorIndex;
+    const mentorIndex = req.params.mentorIndex;
 
     const menteeAllResult = await menteeProvider.retrieveMenteeAll(mentorIndex);
 

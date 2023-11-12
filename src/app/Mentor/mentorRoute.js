@@ -3,7 +3,8 @@ module.exports = function(app){
     const jwtMiddleware = require('../../../config/jwtMiddleware');
 
     // 멘토 전체 조회 API
-    app.get('/app/mentor/all', mentor.getMentorAll)
+    //app.get('/app/mentor/all', mentor.getMentorAll)
+    app.get('/app/mentor/all/:menteeIndex', mentor.getMentorAll)
 
     // 멘토 상세 조회 API
     app.get('/app/mentor/detail/:mentorIndex', mentor.getMentorDetail)
