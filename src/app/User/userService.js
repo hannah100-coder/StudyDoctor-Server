@@ -12,8 +12,41 @@ const {errResponse} = require("../../../config/response");
 
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const axios = require("axios")
 
 // Service: Create, Update, Delete 비즈니스 로직 처리
+
+// 블로그 참고 - 카카오 로그인
+exports.signInKakao = async function (kakaoToken) {
+  const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
+        headers: {
+            Authorization: `Bearer ${kakaoToken}`,
+        },
+    });
+    const {data} = result
+    const name = data.properties.nickname;
+    const email = data.kakao_account.email;
+    //const kakaoId = data.id;
+    //const profileImage = data.properties.profile_image;
+
+    if (!name || !email) throw new error("KEY_ERROR", 400);
+
+    const user = await userDao.getUserIndexByEmail(email);
+
+    if (!user) {
+        await userDao.signUp(name, email);
+    }
+
+    //return jwt.sign({ userIndex: user.userIndex }, process.env.TOKKENSECRET);
+    const jwtToken = jwt.sign( {userIndex: user.userIndex }, secret_config.jwtsecret)
+    console.log('jwtToken: ', jwtToken);
+    return jwtToken;
+    
+}
+
+
+
+
 
 // 1-1. 회원가입
 exports.signUpToken = async function (signUpUserIndex) {
