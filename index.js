@@ -3,20 +3,9 @@ const {logger} = require('./config/winston');
 const http = require("http");
 const app = express();
 const server = http.createServer(app);
-const {Server} = require("socket.io");
-const {instrument} = require("@socket.io/admin-ui")
+const Server = require("socket.io");
 const moment = require("moment");
-const io = new Server(server, {
-    cors: {
-        origin: ["https://admin.socket.io"],
-        credentials: true
-      }
-  });
-
-instrument(io, {
-    auth: false,
-    mode: "development",
-});
+const io = Server(server);
 
 const port = 3000;
 
