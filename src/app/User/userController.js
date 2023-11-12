@@ -9,6 +9,25 @@ const requestIp = require('request-ip');
 const regexEmail = require("regex-email");
 
 
+
+// 블로그 따라한 카카오로그인
+exports.signInKakao = async function(req, res) {
+
+    //const headers = req.headers["authorization"];
+    //const kakaoToken = headers.split(" ")[1];
+    const kakaoToken = '"IuY3fRiNwATJyU3vfe2n7IMQ4IYXEzLFhhYKKiWOAAABi7y8bufokopMIboAuA"'
+
+    const accessToken = await userService.signInKakao(kakaoToken);
+    
+    console.log('accessToken: ', accessToken);
+    
+    return res.status(200).json({ accessToken: accessToken });
+
+
+}
+
+
+
 /** 
  * API No. 1
  * API Name : 로그인 API (JWT 생성) 
@@ -31,6 +50,16 @@ exports.getKakaoJWT = async function(req, res) {
         logger.info(`App - client IP: ${requestIp.getClientIp(req)}, Get Kakao login API \n`);
         return res.send(userCheckByToken);
 }
+
+
+
+
+
+
+
+
+
+
 
 /**
  * API NO. 1-1

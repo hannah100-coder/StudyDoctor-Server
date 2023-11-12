@@ -34,8 +34,34 @@ async function selectMenteeIndex(connection, userIndex) {
 }
 
 
-////////////
+// =========================
 
+// 유저 테이블에 있는 유저인지 email 값으로 조회
+async function getUserIndexByEmail(connection, email) {
+    const getUserIndexByEmailQuery = `
+        SELECT userIndex
+        FROM User
+        WHERE email = ?;
+    `
+    const userIndex = await connection.query(getUserIndexByEmailQuery, email);
+    return userIndex[0];
+}
+
+// 유저테이블에 없는 유저일 경우 회원가입
+async function signUp(connection, userName, email) {
+    const signUpQuery = `
+        INSERT INTO User(userName, email)
+        VALUES (?, ?);
+    `
+    const signUpResult = await connection.query(signUpQuery, userName, email);
+    return signUpResult;
+}
+
+
+
+
+
+// =============================
 // 1. 이메일로 회원 조회 - 네이버로그인
 async function getUserInfo(connection, email) {
     const getUserInfoQuery = `
@@ -110,6 +136,8 @@ async function eraseUserToken(connection, userIdx) {
 module.exports = {
     selectMentorOrMentee,
     selectMentorIndex,
-    selectMenteeIndex
+    selectMenteeIndex,
+    getUserIndexByEmail,
+    signUp,
 };
 
