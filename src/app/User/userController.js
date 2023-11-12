@@ -10,78 +10,28 @@ const regexEmail = require("regex-email");
 
 
 
-// 블로그 따라한 카카오로그인
+// 카카오로그인
 exports.signInKakao = async function(req, res) {
 
     //const headers = req.headers["authorization"];
     //const kakaoToken = headers.split(" ")[1];
-    const kakaoToken = '"IuY3fRiNwATJyU3vfe2n7IMQ4IYXEzLFhhYKKiWOAAABi7y8bufokopMIboAuA"'
+    const kakaoToken = 'tiYbzKyjSFPnuGbFPJktR0JLWQ3tYKCN5sYKPXSYAAABi8Ke1G_okopMIboAuA'
 
-    const accessToken = await userService.signInKakao(kakaoToken);
+    const jwtToken = await userService.signInKakao(kakaoToken);
     
-    console.log('accessToken: ', accessToken);
-    
-    return res.status(200).json({ accessToken: accessToken });
+    return res.status(200).json({ jwtToken: jwtToken });
 
 
 }
 
 
 
-/** 
- * API No. 1
- * API Name : 로그인 API (JWT 생성) 
- * [Post] /auth/kakao
- */
-exports.getKakaoJWT = async function(req, res) {
-    /**
-     * Body: access_token
-     */
-    const access_token = req.body.access_token;
-    console.log(access_token)
-    if(!access_token)
-        return res.send(errResponse(baseResponse.ACCESS_TOKEN_EMPTY))
-    const userCheckByToken = await userProvider.getKakaoInfo(access_token);
-    // if(userCheckbyToken == null)
-    //     return res.send(errResponse(baseResponse.NAVER_LOGIN_ERROR))
-    // else if(userCheckbyToken == 'error')
-    //     return res.send(errResponse(baseResponse.ACCESS_TOKEN_NOT_VALID))
-    // else
-        logger.info(`App - client IP: ${requestIp.getClientIp(req)}, Get Kakao login API \n`);
-        return res.send(userCheckByToken);
-}
 
 
-
-
-
-
-
-
-
-
-
-/**
- * API NO. 1-1
- * API Name : 자동 로그인 API
- * [GET] app/user/autologin
- */
-exports.autoLogin = async function(req, res){
-    const userIdx = req.verifiedToken.userIdx;
-    let isLogined;
-
-    if(userIdx)
-        isLogined = true;
-    else
-        isLogined = false;
-
-    logger.info(`App - client IP: ${requestIp.getClientIp(req)}, userIdx: ${userIdx}, Get autoLogin API \n`);
-    return res.send(response(baseResponse.SUCCESS, isLogined));
-}
 
 /**
  * API NO. 2
- * API Name : 로그아웃 API
+ * API Name : 로그아웃 API - 미완성
  * [GET] /app/user/logout
  */
  exports.logoutUser = async function (req, res){

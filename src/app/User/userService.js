@@ -16,30 +16,34 @@ const axios = require("axios")
 
 // Service: Create, Update, Delete 비즈니스 로직 처리
 
-// 블로그 참고 - 카카오 로그인
+// 카카오 로그인
 exports.signInKakao = async function (kakaoToken) {
+  const connection = await pool.getConnection(async (conn) => conn);
+
   const result = await axios.get("https://kapi.kakao.com/v2/user/me", {
         headers: {
             Authorization: `Bearer ${kakaoToken}`,
         },
     });
+
+
     const {data} = result
     const name = data.properties.nickname;
-    const email = data.kakao_account.email;
-    //const kakaoId = data.id;
+    //const email = data.kakao_account.email;
+    const kakaoId = data.id;
     //const profileImage = data.properties.profile_image;
 
-    if (!name || !email) throw new error("KEY_ERROR", 400);
+    if (!name || !kakaoId) throw new error("KEY_ERROR", 400);
 
-    const user = await userDao.getUserIndexByEmail(email);
+    const user = await userDao.getUserIndexByKakaoId(connection, kakaoId);
 
-    if (!user) {
-        await userDao.signUp(name, email);
+    if (user.length == 0) {
+        await userDao.signUp(connection, [name, kakaoId]);
+        console.log('A new user signed up.')
     }
 
     //return jwt.sign({ userIndex: user.userIndex }, process.env.TOKKENSECRET);
     const jwtToken = jwt.sign( {userIndex: user.userIndex }, secret_config.jwtsecret)
-    console.log('jwtToken: ', jwtToken);
     return jwtToken;
     
 }
@@ -48,61 +52,7 @@ exports.signInKakao = async function (kakaoToken) {
 
 
 
-// 1-1. 회원가입
-exports.signUpToken = async function (signUpUserIndex) {
-    try {
-        //토큰 생성 Service - try~catch 작성
-        let token = await jwt.sign(
-            {
-              userIdx: signUpUserIndex,
-            }, // 토큰의 내용(payload)
-                secret_config.jwtsecret, // 비밀키
-            {
-              expiresIn: "365d",
-              subject: "User",
-            } // 유효 기간 365일
-          );
-        console.log({ 'userIdx': signUpUserIndex, 'jwt': token });
-        //로그인 시 발급되는 jwt를 DB에 저장
-        const connection = await pool.getConnection(async (conn) => conn);
-        const userToken = await userDao.updateUserToken(connection, [token, signUpUserIndex]);
-        connection.release();
-        return response(baseResponse.SUCCESS, {"jwt" :token});
-
-    } catch (err) {
-        logger.error(`App - signupToken Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR);
-    }
-};
-
-// 1-2. 로그인
-exports.loginToken = async function (loginUserIndex) {
-    try {
-        //토큰 생성 Service - try~catch 작성
-        let token = await jwt.sign(
-            {
-              userIdx: loginUserIndex,
-            }, // 토큰의 내용(payload)
-            secret_config.jwtsecret, // 비밀키
-            {
-              expiresIn: "365d",
-              subject: "User",
-            } // 유효 기간 365일
-          );
-        console.log({ 'userIdx': loginUserIndex, 'jwt': token });
-          //로그인 시 발급되는 jwt를 DB에 저장
-        const connection = await pool.getConnection(async (conn) => conn);
-        const userToken = await userDao.updateUserToken(connection, [token, loginUserIndex]);
-        connection.release();
-        return response(baseResponse.SUCCESS, {"jwt" :token});
-
-    } catch (err) {
-        logger.error(`App - loginToken Service error\n: ${err.message}`);
-        return errResponse(baseResponse.DB_ERROR);
-    }
-};
-
-// 2. 로그아웃 API
+// 2. 로그아웃 API - 미완성
 exports.logoutUser = async function(userIdx) {
     const connection = await pool.getConnection(async (conn) => conn);
     try{
