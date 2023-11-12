@@ -15,9 +15,9 @@ exports.signInKakao = async function(req, res) {
 
     //const headers = req.headers["authorization"];
     //const kakaoToken = headers.split(" ")[1];
-    const kakaoToken = 'tiYbzKyjSFPnuGbFPJktR0JLWQ3tYKCN5sYKPXSYAAABi8Ke1G_okopMIboAuA'
+    const accessToken = req.body.accessToken;
 
-    const jwtToken = await userService.signInKakao(kakaoToken);
+    const jwtToken = await userService.signInKakao(accessToken);
     
     return res.status(200).json({ jwtToken: jwtToken });
 
