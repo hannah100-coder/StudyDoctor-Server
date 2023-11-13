@@ -17,6 +17,8 @@ exports.signInKakao = async function(req, res) {
     const accessToken = headers.split(" ")[1];
     //const accessToken = req.body.accessToken;
 
+    console.log('in controller, accesstoken: ', accessToken);
+
     const jwtToken = await userService.signInKakao(accessToken);
     
     return res.status(200).json({ jwtToken: jwtToken });
