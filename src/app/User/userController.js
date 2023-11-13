@@ -13,9 +13,9 @@ const regexEmail = require("regex-email");
 // 카카오로그인
 exports.signInKakao = async function(req, res) {
 
-    //const headers = req.headers["authorization"];
-    //const kakaoToken = headers.split(" ")[1];
-    const accessToken = req.body.accessToken;
+    const headers = req.headers["authorization"];
+    const kakaoToken = headers.split(" ")[1];
+    //const accessToken = req.body.accessToken;
 
     const jwtToken = await userService.signInKakao(accessToken);
     
