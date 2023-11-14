@@ -36,50 +36,42 @@ async function selectMenteeIndex(connection, userIndex) {
 
 // =========================
 
-// 유저 테이블에 있는 유저인지 email 값으로 조회
-async function getUserIndexByKakaoId(connection, kakaoId) {
-    const getUserIndexByKakaoIdQuery = `
-        SELECT userIndex
-        FROM User
-        WHERE kakaoID = ?;
-    `
-    const userIndex = await connection.query(getUserIndexByKakaoIdQuery, kakaoId);
-    return userIndex[0];
-}
+// // 유저 테이블에 있는 유저인지 email 값으로 조회
+// async function getUserIndexByKakaoId(connection, kakaoId) {
+//     const getUserIndexByKakaoIdQuery = `
+//         SELECT userIndex
+//         FROM User
+//         WHERE kakaoID = ?;
+//     `
+//     const userIndex = await connection.query(getUserIndexByKakaoIdQuery, kakaoId);
+//     return userIndex[0];
+// }
 
-// 유저테이블에 없는 유저일 경우 회원가입
-async function signUp(connection, signUpParams) {
-    const signUpQuery = `
-        INSERT INTO User(userName, kakaoID)
-        VALUES (?, ?);
-    `
-    const signUpResult = await connection.query(signUpQuery, signUpParams);
-    return signUpResult;
-}
-
-
+// // 유저테이블에 없는 유저일 경우 회원가입
+// async function signUp(connection, signUpParams) {
+//     const signUpQuery = `
+//         INSERT INTO User(userName, kakaoID)
+//         VALUES (?, ?);
+//     `
+//     const signUpResult = await connection.query(signUpQuery, signUpParams);
+//     return signUpResult;
+// }
 
 
-
-
-
-
-// 2. 로그아웃, 3. 회원탈퇴 - 토큰 삭제
-async function eraseUserToken(connection, userIdx) {
-    const eraseUserTokenQuery = `
-        UPDATE User
-        SET token = NULL
-        WHERE userIdx = ?;
-    `;
-    const eraseUserTokenRows = await connection.query(eraseUserTokenQuery, userIdx);
-    return eraseUserTokenRows;
-  }
+// // 2. 로그아웃, 3. 회원탈퇴 - 토큰 삭제
+// async function eraseUserToken(connection, userIdx) {
+//     const eraseUserTokenQuery = `
+//         UPDATE User
+//         SET token = NULL
+//         WHERE userIdx = ?;
+//     `;
+//     const eraseUserTokenRows = await connection.query(eraseUserTokenQuery, userIdx);
+//     return eraseUserTokenRows;
+//   }
 
 module.exports = {
     selectMentorOrMentee,
     selectMentorIndex,
     selectMenteeIndex,
-    getUserIndexByKakaoId,
-    signUp,
 };
 
