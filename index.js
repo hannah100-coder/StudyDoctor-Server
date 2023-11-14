@@ -14,11 +14,21 @@ io.on("connection", (socket) =>{
     socket.onAny((event) => console.log(`Socket Event: ${event}`));
     socket.on("enter_room", (roomName, done) => {
         socket.join(roomName);
+        socket.to(roomName).emit("welcome", socket.nicknamed);
         done();
+    })
+    socket.on("offer", (offer, roomName) => {
+        socket.to(roomName).emit("offer", offer);
+    })
+    socket.on("answer", (answer, roomName) => {
+        socket.to(roomName).emit("answer", answer);
+    })
+    socket.on("ice", (ice, roomName) => {
+        socket.to(roomName).emit("ice", ice);
     })
     socket.on("disconnecting", () => {
         socket.rooms.forEach((room) => socket.to(room).emit("bye", socket.nickname));
-    });
+    })
     socket.on("new_message", (msg, room, done) => {
         socket.to(room).emit("new_message", socket.nickname, msg);
         done();
