@@ -9,6 +9,8 @@ const io = Server(server);
 
 const port = 3000;
 
+console.log("test");
+
 io.on("connection", (socket) =>{
     socket["nickname"] = "Anon";
     socket.onAny((event) => console.log(`Socket Event: ${event}`));
@@ -29,9 +31,6 @@ io.on("connection", (socket) =>{
     socket.on("new_message", (msg, room, done) => {
         socket.to(room).emit("new_message", socket.nickname, msg);
         done();
-    })
-    socket.on("test", (test, room) => {
-        socket.to(room).emit("new_message", socket.nickname, test);
     })
     socket.on("nickname", (nickname) => socket["nickname"] = nickname);
 });
