@@ -29,6 +29,9 @@ io.on("connection", (socket) =>{
         socket.to(room).emit("new_message", socket.nickname, msg);
         done();
     })
+    socket.on("test", (test, room) => {
+        socket.to(room).emit("new_message", socket.nickname, test);
+    })
     socket.on("nickname", (nickname) => socket["nickname"] = nickname);
 });
 
